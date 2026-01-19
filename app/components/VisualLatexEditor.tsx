@@ -5,7 +5,6 @@ import { createEditor, Descendant, Element as SlateElement, Transforms, Editor, 
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
 import { HistoryEditor, withHistory } from 'slate-history';
 import katex from 'katex';
-import 'katex/dist/katex.min.css';
 import {
     FaBold, FaItalic, FaList, FaPlay, FaTable, FaImage,
     FaFont, FaListOl, FaIndent, FaOutdent, FaFileAlt,

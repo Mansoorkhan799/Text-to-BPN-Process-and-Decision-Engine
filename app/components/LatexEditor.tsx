@@ -15,8 +15,6 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
-import katex from 'katex';
-import 'katex/dist/katex.min.css';
 import {
     FaBold, FaItalic, FaList, FaPlay, FaTable, FaImage,
     FaFont, FaListOl, FaIndent, FaOutdent, FaFileAlt,

@@ -18,7 +18,6 @@ import {
 } from 'react-icons/fa';
 import { LatexVersion, getLatexProjectVersions, revertToLatexVersion, formatTimestamp, getChangeDescription, compareLatexVersions } from '../utils/latexVersions';
 import katex from 'katex';
-import 'katex/dist/katex.min.css';
 
 interface ChangesTrackerProps {
     projectId: string;
