@@ -451,16 +451,16 @@ export async function GET(req: NextRequest) {
     
     // Try to find by fileId first, then by _id (only if it's a valid ObjectId)
     let file = await BpmnFile.findOne({ fileId: fileId, userId });
-    if (!file && mongoose.Types.ObjectId.isValid(fileId)) {
+      if (!file && mongoose.Types.ObjectId.isValid(fileId)) {
       file = await BpmnFile.findOne({ _id: fileId, userId });
-    }
-    
-    if (!file) {
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
-    }
-    
-    console.log('Retrieved file from MongoDB Atlas:', file.fileId || file._id, file.name);
-    return NextResponse.json(file);
+      }
+      
+      if (!file) {
+        return NextResponse.json({ error: 'File not found' }, { status: 404 });
+      }
+      
+      console.log('Retrieved file from MongoDB Atlas:', file.fileId || file._id, file.name);
+      return NextResponse.json(file);
   } catch (error) {
     console.error('Error in GET /api/bpmn:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -647,13 +647,13 @@ export async function PUT(req: NextRequest) {
     
     // Try to find by fileId first, then by _id (only if it's a valid ObjectId)
     let file = await BpmnFile.findOne({ fileId: fileId, userId });
-    if (!file && mongoose.Types.ObjectId.isValid(fileId)) {
+      if (!file && mongoose.Types.ObjectId.isValid(fileId)) {
       file = await BpmnFile.findOne({ _id: fileId, userId });
-    }
-    
-    if (!file) {
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
-    }
+      }
+      
+      if (!file) {
+        return NextResponse.json({ error: 'File not found' }, { status: 404 });
+      }
 
     // Verify ownership
     if (file.userId !== userId) {
@@ -662,50 +662,50 @@ export async function PUT(req: NextRequest) {
         { status: 403 }
       );
     }
-    
-    // Update the file with new metadata
-    const updateData: any = { updatedAt: new Date() };
-    
-    if (processMetadata) {
-      updateData.processMetadata = processMetadata;
-    }
-    
-    if (advancedDetails) {
-      // Increment version number when advanced details are updated
-      const currentVersion = file.advancedDetails?.versionNo || '1.0.0';
-      const versionParts = currentVersion.split('.');
-      const major = parseInt(versionParts[0]) || 1;
-      const minor = parseInt(versionParts[1]) || 0;
-      const patch = parseInt(versionParts[2]) || 0;
       
-      updateData.advancedDetails = {
-        ...advancedDetails,
-        versionNo: `${major}.${minor}.${patch + 1}`,
-        modificationDate: new Date(),
-      };
-    }
-    
-    // Update table data
-    if (signOffData) {
-      updateData.signOffData = signOffData;
-    }
-    
-    if (historyData) {
-      updateData.historyData = historyData;
-    }
-    
-    if (triggerData) {
-      updateData.triggerData = triggerData;
-    }
-    
-    const updatedFile = await BpmnFile.findByIdAndUpdate(
-      file._id,
-      updateData,
-      { new: true }
-    );
-    
-    console.log('Updated file in MongoDB Atlas:', updatedFile.fileId);
-    return NextResponse.json(updatedFile);
+      // Update the file with new metadata
+      const updateData: any = { updatedAt: new Date() };
+      
+      if (processMetadata) {
+        updateData.processMetadata = processMetadata;
+      }
+      
+      if (advancedDetails) {
+        // Increment version number when advanced details are updated
+        const currentVersion = file.advancedDetails?.versionNo || '1.0.0';
+        const versionParts = currentVersion.split('.');
+        const major = parseInt(versionParts[0]) || 1;
+        const minor = parseInt(versionParts[1]) || 0;
+        const patch = parseInt(versionParts[2]) || 0;
+        
+        updateData.advancedDetails = {
+          ...advancedDetails,
+          versionNo: `${major}.${minor}.${patch + 1}`,
+          modificationDate: new Date(),
+        };
+      }
+      
+      // Update table data
+      if (signOffData) {
+        updateData.signOffData = signOffData;
+      }
+      
+      if (historyData) {
+        updateData.historyData = historyData;
+      }
+      
+      if (triggerData) {
+        updateData.triggerData = triggerData;
+      }
+      
+      const updatedFile = await BpmnFile.findByIdAndUpdate(
+        file._id,
+        updateData,
+        { new: true }
+      );
+      
+      console.log('Updated file in MongoDB Atlas:', updatedFile.fileId);
+      return NextResponse.json(updatedFile);
   } catch (error) {
     console.error('Error in PUT /api/bpmn:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

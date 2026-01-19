@@ -289,7 +289,7 @@ const LatexEditor: React.FC<LatexEditorProps> = ({ user, initialContent: initial
         if (!latexContent.trim()) {
             setCompilationLog('LaTeX content is required.\n');
             return;
-        }
+            }
 
         setIsCompiling(true);
         setCompilationLog('Starting compilation...\n');
@@ -319,7 +319,7 @@ const LatexEditor: React.FC<LatexEditorProps> = ({ user, initialContent: initial
                     }
                 } catch (error) {
                     console.error('Error getting file tree:', error);
-                }
+                                }
             }
 
             const response = await fetch('/api/latex/compile', {
@@ -337,10 +337,10 @@ const LatexEditor: React.FC<LatexEditorProps> = ({ user, initialContent: initial
             if (data.success && data.pdf) {
                 setPdfUrl(data.pdf);
                 setCompilationLog(prev => prev + '\nCompilation successful! ✓\n' + (data.log || ''));
-            } else {
+                        } else {
                 setCompilationLog(prev => prev + '\nCompilation failed! ✗\n' + (data.log || data.error || ''));
                 setPdfUrl(null);
-            }
+                }
         } catch (error: any) {
             setCompilationLog(prev => prev + `\nError: ${error.message}\n`);
             setPdfUrl(null);
@@ -573,8 +573,8 @@ const LatexEditor: React.FC<LatexEditorProps> = ({ user, initialContent: initial
                 link.click();
                 document.body.removeChild(link);
                 return;
-            }
-
+                }
+                
             // Otherwise, compile first and then download
             if (!isCompiling) {
                 await compileLatexToPDF();
@@ -2733,11 +2733,11 @@ const LatexEditor: React.FC<LatexEditorProps> = ({ user, initialContent: initial
                             title="PDF Preview"
                         />
                     ) : (
-                        <div className="latex-preview bg-white h-full overflow-y-auto overflow-x-auto p-8 custom-scrollbar">
+                    <div className="latex-preview bg-white h-full overflow-y-auto overflow-x-auto p-8 custom-scrollbar">
                             <div className="text-center text-gray-500">
                                 <p className="mb-2">No PDF compiled yet</p>
                                 <p className="text-sm">Click "Compile" to generate PDF using external API</p>
-                            </div>
+                    </div>
                         </div>
                     )}
                 </div>

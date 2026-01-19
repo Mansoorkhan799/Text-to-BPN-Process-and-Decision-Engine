@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     }
 
     await connectDB();
-
+    
     // Get user information to get user ID
     const mongoDb = mongoose.connection.db;
     if (!mongoDb) {
@@ -78,9 +78,9 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
-
+    
     await connectDB();
-
+    
     // Get user information to get user ID
     const mongoDb = mongoose.connection.db;
     if (!mongoDb) {

@@ -107,18 +107,18 @@ export async function GET(request: NextRequest) {
       KPI.countDocuments({ createdBy: userId }),
       // Recent activity count - filter by user
       Promise.all([
-        BpmnFile.countDocuments({ 
+      BpmnFile.countDocuments({ 
           userId: userId,
-          updatedAt: { $gte: sevenDaysAgo }
-        }),
-        LatexFile.countDocuments({ 
+        updatedAt: { $gte: sevenDaysAgo }
+      }),
+      LatexFile.countDocuments({ 
           userId: userId,
-          updatedAt: { $gte: sevenDaysAgo }
-        }),
-        Record.countDocuments({ 
+        updatedAt: { $gte: sevenDaysAgo }
+      }),
+      Record.countDocuments({ 
           owner: userId,
-          createdAt: { $gte: sevenDaysAgo }
-        })
+        createdAt: { $gte: sevenDaysAgo }
+      })
       ]).then(counts => counts.reduce((sum, count) => sum + count, 0))
     ]);
 
