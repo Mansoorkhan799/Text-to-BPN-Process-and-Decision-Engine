@@ -140,11 +140,14 @@
     "@types/trusted-types": "^2.0.7",
     "@types/use-sync-external-store": "^1.5.0",
     "@types/uuid": "^10.0.0",
+    "autoprefixer": "^10.4.23",
     "css-loader": "^7.1.2",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.0",
+    "postcss": "^8.5.6",
     "sass": "^1.87.0",
     "style-loader": "^4.0.0",
+    "tailwindcss": "^4.1.18",
     "typescript": "5.8.3"
   }
 }
