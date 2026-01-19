@@ -15,6 +15,15 @@ const nextConfig = {
             tls: false,
         };
 
+        // Ensure proper module resolution for Vercel builds
+        config.resolve.extensions = ['.tsx', '.ts', '.jsx', '.js', '.json'];
+        
+        // Add aliases to help with module resolution
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            '@': __dirname,
+        };
+
         return config;
     },
     // Disable ESLint during build to avoid configuration issues
