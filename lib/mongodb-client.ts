@@ -4,10 +4,19 @@ let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
 
 export async function connectToDatabase() {
+  // Skip MongoDB connection during build time
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    throw new Error('MongoDB connection skipped during build phase');
+  }
+
   try {
     // Runtime check for MongoDB URI
     if (!process.env.MONGODB_URI) {
-      throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+      // During build, this is expected - don't throw, just return a mock
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('⚠️ MONGODB_URI not set - this is expected during build');
+      }
+      throw new Error('Please define the MONGODB_URI environment variable');
     }
 
     const uri = process.env.MONGODB_URI;
@@ -45,7 +54,10 @@ export async function connectToDatabase() {
     
     return { client, db };
   } catch (error) {
-    console.error('Failed to connect to MongoDB:', error);
+    // Don't log errors during build phase
+    if (process.env.NEXT_PHASE !== 'phase-production-build') {
+      console.error('Failed to connect to MongoDB:', error);
+    }
     throw error;
   }
 }

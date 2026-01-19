@@ -56,6 +56,17 @@ const nextConfig = {
         maxInactiveAge: 25 * 1000,
         pagesBufferLength: 2,
     },
+    // Skip prerendering API routes during build to avoid MongoDB connection errors
+    async headers() {
+        return [
+            {
+                source: '/api/:path*',
+                headers: [
+                    { key: 'Cache-Control', value: 'no-store, must-revalidate' },
+                ],
+            },
+        ];
+    },
 };
 
 module.exports = nextConfig; 

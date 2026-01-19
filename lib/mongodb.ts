@@ -30,11 +30,20 @@ const shouldLogConnection = () => {
 };
 
 async function connectDB(silent = false) {
+  // Skip MongoDB connection during build time
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    throw new Error('MongoDB connection skipped during build phase');
+  }
+
   // Runtime check for MongoDB URI
-  const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sidemenu';
+  const MONGODB_URI = process.env.MONGODB_URI;
   
   if (!MONGODB_URI) {
-    throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+    // During build, this is expected - don't throw, just return null
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('⚠️ MONGODB_URI not set - this is expected during build');
+    }
+    throw new Error('Please define the MONGODB_URI environment variable');
   }
   
   if (cached.conn) {
@@ -62,8 +71,10 @@ async function connectDB(silent = false) {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    // Always log errors
-    console.error('❌ Failed to connect to MongoDB:', e);
+    // Don't log errors during build phase
+    if (process.env.NEXT_PHASE !== 'phase-production-build') {
+      console.error('❌ Failed to connect to MongoDB:', e);
+    }
     throw e;
   }
 

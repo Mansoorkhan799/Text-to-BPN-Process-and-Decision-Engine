@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb-client';
 import { ObjectId } from 'mongodb';
 
+// Ensure this route is always dynamic and never statically generated
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // Helper function to check if ID is a temporary ID
 function isTemporaryId(id: string): boolean {
   return id.startsWith('temp-');

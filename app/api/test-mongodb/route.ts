@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb-client';
 
+// Ensure this route is always dynamic and never statically generated
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET() {
   try {
     console.log('Attempting to connect to MongoDB...');
