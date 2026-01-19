@@ -1,0 +1,2 @@
+This file forces Vercel to do a complete rebuild without cache.
+Timestamp: 2026-01-20
