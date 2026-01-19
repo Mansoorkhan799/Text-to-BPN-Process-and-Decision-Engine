@@ -5,6 +5,10 @@ import User from '../../../models/User';
 import mongoose from 'mongoose';
 import { verifyToken } from '../../../app/utils/jwt';
 
+// Ensure this route is always dynamic and never statically generated
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // Temporary mock data for testing when MongoDB is not available
 const mockFiles = new Map<string, any>([
   ['test-file-1', {

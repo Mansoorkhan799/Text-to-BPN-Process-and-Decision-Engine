@@ -4,6 +4,10 @@ import KPI from '@/models/KPI';
 import { verifyToken } from '@/app/utils/jwt';
 import mongoose from 'mongoose';
 
+// Ensure this route is always dynamic and never statically generated
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET(request: NextRequest) {
   try {
     // Verify user is authenticated
