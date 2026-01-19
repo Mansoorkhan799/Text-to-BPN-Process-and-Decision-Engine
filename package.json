@@ -64,7 +64,7 @@
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^3.0.1",
     "jszip": "^3.10.1",
-    "katex": "^0.16.22",
+    "katex": "^0.16.25",
     "latex.js": "^0.12.6",
     "lucide-react": "^0.507.0",
     "mammoth": "^1.10.0",
