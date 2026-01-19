@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { Input } from '@/app/components/ui/Input';
-import { Button } from '@/app/components/ui/Button';
-import { GoogleSignInButton } from '@/app/components/ui/GoogleSignInButton';
-import { Divider } from '@/app/components/ui/Divider';
-import { PasswordInput } from '@/app/components/ui/PasswordInput';
-import { AuthLayout } from '@/app/components/ui/AuthLayout';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
+import { GoogleSignInButton } from '../components/ui/GoogleSignInButton';
+import { Divider } from '../components/ui/Divider';
+import { PasswordInput } from '../components/ui/PasswordInput';
+import { AuthLayout } from '../components/ui/AuthLayout';
 import { motion } from 'framer-motion';
 
 interface FormErrors {
