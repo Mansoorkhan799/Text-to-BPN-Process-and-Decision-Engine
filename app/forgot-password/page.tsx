@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { Card } from '@/app/components/ui/Card';
-import { Input } from '@/app/components/ui/Input';
-import { Button } from '@/app/components/ui/Button';
-import { Divider } from '@/app/components/ui/Divider';
+import { Card } from '../components/ui/Card';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
+import { Divider } from '../components/ui/Divider';
 
 export default function ForgotPassword() {
   const router = useRouter();

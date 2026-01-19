@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import ProfileForm from '@/app/components/ProfileForm';
+import ProfileForm from '../components/ProfileForm';
 import { User } from '@/app/types';
 
 export default function EditProfilePage() {

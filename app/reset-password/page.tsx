@@ -4,10 +4,10 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { Card } from '@/app/components/ui/Card';
-import { Input } from '@/app/components/ui/Input';
-import { Button } from '@/app/components/ui/Button';
-import { PasswordInput } from '@/app/components/ui/PasswordInput';
+import { Card } from '../components/ui/Card';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
+import { PasswordInput } from '../components/ui/PasswordInput';
 
 function ResetPasswordForm() {
   const router = useRouter();
