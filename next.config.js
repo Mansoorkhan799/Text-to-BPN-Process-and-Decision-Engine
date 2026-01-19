@@ -35,8 +35,8 @@ const nextConfig = {
     // Production optimizations
     experimental: {
         serverComponentsExternalPackages: ['mongoose', 'mongodb'],
-        // Disable instrumentation to avoid OpenTelemetry warnings in serverless
-        instrumentationHook: false,
+        // Enable instrumentation file to suppress OpenTelemetry errors
+        instrumentationHook: true,
     },
     // Optimize for Vercel
     compress: true,
