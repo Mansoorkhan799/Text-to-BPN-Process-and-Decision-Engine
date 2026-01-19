@@ -35,11 +35,18 @@ const nextConfig = {
     // Production optimizations
     experimental: {
         serverComponentsExternalPackages: ['mongoose', 'mongodb'],
+        // Disable instrumentation to avoid OpenTelemetry warnings in serverless
+        instrumentationHook: false,
     },
     // Optimize for Vercel
     compress: true,
     poweredByHeader: false,
     generateEtags: false,
+    // Suppress OpenTelemetry warnings in production
+    onDemandEntries: {
+        maxInactiveAge: 25 * 1000,
+        pagesBufferLength: 2,
+    },
 };
 
 module.exports = nextConfig; 
