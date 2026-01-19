@@ -3,11 +3,6 @@ import { getTokenFromRequest, verifyToken } from '@/app/utils/jwt';
 import User from '@/models/User';
 import OpenAI from 'openai';
 
-// Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
-
 // Token counting function (rough estimation) - kept for monitoring only
 function countTokens(text: string): number {
   // Rough estimation: 1 token ≈ 4 characters for English text
@@ -672,6 +667,11 @@ RESPONSE FORMAT:
     }
 
     try {
+      // Initialize OpenAI client (lazy initialization to avoid build-time errors)
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY || '',
+      });
+      
       // Generate content with OpenAI GPT-4o Mini (with retry for BPMN generation)
       let aiResponse = '';
       let attempts = 0;
