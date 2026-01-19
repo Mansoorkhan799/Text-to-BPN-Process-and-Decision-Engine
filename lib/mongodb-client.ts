@@ -1,26 +1,27 @@
 import { MongoClient, Db } from 'mongodb';
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
-
-const uri = process.env.MONGODB_URI;
-const options = {
-  maxPoolSize: 10,
-  serverSelectionTimeoutMS: 5000,
-  socketTimeoutMS: 45000,
-  // Add connection pooling options
-  minPoolSize: 2,
-  maxIdleTimeMS: 30000,
-  // Enable connection monitoring
-  monitorCommands: false,
-};
-
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
 
 export async function connectToDatabase() {
   try {
+    // Runtime check for MongoDB URI
+    if (!process.env.MONGODB_URI) {
+      throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+    }
+
+    const uri = process.env.MONGODB_URI;
+    const options = {
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      // Add connection pooling options
+      minPoolSize: 2,
+      maxIdleTimeMS: 30000,
+      // Enable connection monitoring
+      monitorCommands: false,
+    };
+    
     // If we have a cached connection, use it
     if (cachedClient && cachedDb) {
       // Test if the connection is still alive
@@ -57,13 +58,15 @@ export async function closeConnection() {
   }
 }
 
-// Graceful shutdown
-process.on('SIGINT', async () => {
-  await closeConnection();
-  process.exit(0);
-});
+// Graceful shutdown - only register in non-build environments
+if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'production') {
+  process.on('SIGINT', async () => {
+    await closeConnection();
+    process.exit(0);
+  });
 
-process.on('SIGTERM', async () => {
-  await closeConnection();
-  process.exit(0);
-});
+  process.on('SIGTERM', async () => {
+    await closeConnection();
+    process.exit(0);
+  });
+}

@@ -1,11 +1,5 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sidemenu';
-
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
-
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
@@ -36,6 +30,13 @@ const shouldLogConnection = () => {
 };
 
 async function connectDB(silent = false) {
+  // Runtime check for MongoDB URI
+  const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sidemenu';
+  
+  if (!MONGODB_URI) {
+    throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  }
+  
   if (cached.conn) {
     // Only log "already connected" if it's not a silent check and should log based on time
     if (!silent && shouldLogConnection()) {
