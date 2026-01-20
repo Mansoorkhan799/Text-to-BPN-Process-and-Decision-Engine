@@ -58,14 +58,18 @@ export const generateOTP = () => {
 // Store OTP with 5 minutes expiry
 export const storeOTP = (email: string, otp: string) => {
   try {
-    console.log('Storing OTP for email:', email, 'OTP:', otp); // Debug log
+    // Normalize email - trim whitespace and convert to lowercase
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedOTP = otp.trim();
+    
+    console.log('Storing OTP for email:', normalizedEmail, 'OTP:', normalizedOTP); // Debug log
 
     // Read current store
     const store = readOTPStore();
 
     // Store new OTP
-    store[email] = {
-      otp,
+    store[normalizedEmail] = {
+      otp: normalizedOTP,
       timestamp: Date.now(),
     };
 
@@ -83,37 +87,49 @@ export const storeOTP = (email: string, otp: string) => {
 // Verify OTP
 export const verifyOTP = (email: string, otp: string): boolean => {
   try {
-    console.log('Verifying OTP for email:', email, 'Input OTP:', otp); // Debug log
+    // Normalize inputs - trim whitespace and convert to lowercase for email
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedOTP = otp.trim();
+    
+    console.log('Verifying OTP for email:', normalizedEmail, 'Input OTP:', normalizedOTP); // Debug log
 
     // Read current store
     const store = readOTPStore();
     console.log('Current OTP store:', store); // Debug log
 
-    const stored = store[email];
+    const stored = store[normalizedEmail];
     console.log('Stored OTP data:', stored); // Debug log
 
     if (!stored) {
-      console.log('No OTP found for email:', email); // Debug log
+      console.log('No OTP found for email:', normalizedEmail); // Debug log
+      console.log('Available emails in store:', Object.keys(store)); // Debug log
       return false;
     }
 
     // Check if OTP is expired (5 minutes)
-    const isExpired = Date.now() - stored.timestamp > 5 * 60 * 1000;
+    const timeElapsed = Date.now() - stored.timestamp;
+    const isExpired = timeElapsed > 5 * 60 * 1000;
+    console.log('Time elapsed (ms):', timeElapsed, 'Is expired:', isExpired); // Debug log
+    
     if (isExpired) {
-      console.log('OTP expired for email:', email); // Debug log
-      delete store[email];
+      console.log('OTP expired for email:', normalizedEmail); // Debug log
+      delete store[normalizedEmail];
       writeOTPStore(store);
       return false;
     }
 
-    // Compare OTPs
-    const isValid = stored.otp === otp;
-    console.log('OTP validation result:', isValid, 'Stored:', stored.otp, 'Input:', otp); // Debug log
+    // Compare OTPs (both should be strings)
+    const isValid = stored.otp === normalizedOTP;
+    console.log('OTP validation result:', isValid); // Debug log
+    console.log('Stored OTP:', stored.otp, 'Type:', typeof stored.otp); // Debug log
+    console.log('Input OTP:', normalizedOTP, 'Type:', typeof normalizedOTP); // Debug log
+    console.log('Character comparison:', [...stored.otp], 'vs', [...normalizedOTP]); // Debug log
 
     if (isValid) {
       // Remove used OTP
-      delete store[email];
+      delete store[normalizedEmail];
       writeOTPStore(store);
+      console.log('OTP verified and removed from store'); // Debug log
     }
     return isValid;
   } catch (error) {

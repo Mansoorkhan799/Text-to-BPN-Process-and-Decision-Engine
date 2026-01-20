@@ -9,11 +9,17 @@ export const runtime = 'nodejs';
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:3000/api/auth/google/callback';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function GET(request: NextRequest) {
   try {
+    // Dynamically determine the redirect URI based on the current domain
+    const protocol = request.headers.get('x-forwarded-proto') || 'http';
+    const host = request.headers.get('host') || 'localhost:3000';
+    const REDIRECT_URI = process.env.REDIRECT_URI || `${protocol}://${host}/api/auth/google/callback`;
+
+    console.log('Google OAuth callback redirect URI:', REDIRECT_URI);
+
     const searchParams = request.nextUrl.searchParams;
     const code = searchParams.get('code');
 
