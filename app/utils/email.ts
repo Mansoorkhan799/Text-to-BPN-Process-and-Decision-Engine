@@ -123,7 +123,7 @@ export const verifyOTP = (email: string, otp: string): boolean => {
     console.log('OTP validation result:', isValid); // Debug log
     console.log('Stored OTP:', stored.otp, 'Type:', typeof stored.otp); // Debug log
     console.log('Input OTP:', normalizedOTP, 'Type:', typeof normalizedOTP); // Debug log
-    console.log('Character comparison:', [...stored.otp], 'vs', [...normalizedOTP]); // Debug log
+    console.log('Character comparison:', stored.otp.split(''), 'vs', normalizedOTP.split('')); // Debug log
 
     if (isValid) {
       // Remove used OTP
