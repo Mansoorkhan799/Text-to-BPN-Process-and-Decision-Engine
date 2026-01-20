@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectMongo from '@/lib/mongodb';
+import connectDB from '@/lib/mongodb';
 import DecisionRule from '@/models/DecisionRule';
 import { v4 as uuidv4 } from 'uuid';
 import { verifyToken } from '@/app/utils/jwt';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // GET - Fetch all decision rules for the current user
 export async function GET(req: NextRequest) {
   try {
-    await connectMongo();
+    await connectDB();
     
     const token = req.cookies.get('token')?.value;
     
@@ -50,7 +54,7 @@ export async function GET(req: NextRequest) {
 // POST - Create a new decision rule
 export async function POST(req: NextRequest) {
   try {
-    await connectMongo();
+    await connectDB();
     
     const token = req.cookies.get('token')?.value;
     
@@ -102,7 +106,7 @@ export async function POST(req: NextRequest) {
 // PUT - Update an existing decision rule
 export async function PUT(req: NextRequest) {
   try {
-    await connectMongo();
+    await connectDB();
     
     const token = req.cookies.get('token')?.value;
     
@@ -145,7 +149,7 @@ export async function PUT(req: NextRequest) {
 // DELETE - Delete a decision rule
 export async function DELETE(req: NextRequest) {
   try {
-    await connectMongo();
+    await connectDB();
     
     const token = req.cookies.get('token')?.value;
     

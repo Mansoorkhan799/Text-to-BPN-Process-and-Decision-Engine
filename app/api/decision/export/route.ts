@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
-import connectMongo from '@/lib/mongodb';
+import connectDB from '@/lib/mongodb';
 import DecisionExportFile from '@/models/DecisionExportFile';
 import { verifyToken } from '@/app/utils/jwt';
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 // POST - Export data to Excel/CSV
 export async function POST(req: NextRequest) {
@@ -26,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     // Optionally save to storage (Mongo collection)
     if (save) {
-      await connectMongo();
+      await connectDB();
       const token = req.cookies.get('token')?.value;
       const user = token ? verifyToken(token) : null;
       if (!user?.email) {
@@ -57,7 +61,7 @@ export async function POST(req: NextRequest) {
 // GET - List saved exported files for current user or download by id
 export async function GET(req: NextRequest) {
   try {
-    await connectMongo();
+    await connectDB();
     const token = req.cookies.get('token')?.value;
     const user = token ? verifyToken(token) : null;
     if (!user?.email) {

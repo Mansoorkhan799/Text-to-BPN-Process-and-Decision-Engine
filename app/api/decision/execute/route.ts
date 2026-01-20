@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectMongo from '@/lib/mongodb';
+import connectDB from '@/lib/mongodb';
 import DecisionRule from '@/models/DecisionRule';
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 // POST - Execute decision rules against data
 export async function POST(req: NextRequest) {
   try {
-    await connectMongo();
+    await connectDB();
     
     const { data, ruleIds } = await req.json();
     

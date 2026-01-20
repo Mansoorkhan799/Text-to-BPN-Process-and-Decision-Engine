@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // POST - Trigger BPMN workflow based on decision results
 export async function POST(req: NextRequest) {
   try {

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // POST - Parse Excel/CSV file and return data
 export async function POST(req: NextRequest) {
   try {
