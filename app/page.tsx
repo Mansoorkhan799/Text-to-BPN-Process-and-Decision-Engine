@@ -11,7 +11,7 @@ import Notifications from './components/Notifications';
 import CombinedLatexEditor from './components/CombinedLatexEditor';
 import toast from 'react-hot-toast';
 import { User } from './types';
-import { HiOutlineSparkles } from 'react-icons/hi';
+import { HiOutlineSparkles, HiOutlineCube } from 'react-icons/hi';
 import { RoleBasedUi, ROLES } from './utils/permissions';
 import dynamic from 'next/dynamic';
 import AdminFileManagement from './components/AdminFileManagement';
@@ -250,6 +250,12 @@ export default function Home() {
       // We still allow the view to be set so the message is shown
     }
 
+    // Navigate to dedicated pages
+    if (view === 'decision-engine') {
+      router.push('/decision-engine');
+      return;
+    }
+
     // Collapse side menu when navigating to BPMN editor or LaTeX editor
     if (view === 'bpmn' || view === 'latex') {
       setIsCollapsed(true);
@@ -382,10 +388,10 @@ export default function Home() {
               {/* Quick Actions Section */}
               <div className="mb-4">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">Quick Actions</h2>
-                <div className="flex flex-col sm:flex-row justify-between items-center sm:items-stretch gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   <button
                     onClick={() => handleNavigation('ai-process-generator')}
-                    className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105 w-full sm:w-64 flex-shrink-0"
+                    className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105"
                   >
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
@@ -399,8 +405,23 @@ export default function Home() {
                   </button>
 
                   <button
+                    onClick={() => handleNavigation('decision-engine')}
+                    className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white p-4 rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105"
+                  >
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
+                        <HiOutlineCube className="w-4 h-4" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-semibold text-sm">Decision Engine</h3>
+                        <p className="text-xs opacity-90">Rule-based automation</p>
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
                     onClick={() => handleNavigation('kpi-dashboard')}
-                    className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-4 rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105 w-full sm:w-64 flex-shrink-0"
+                    className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-4 rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105"
                   >
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
@@ -417,7 +438,7 @@ export default function Home() {
 
                   <button
                     onClick={() => handleNavigation('records')}
-                    className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-4 rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105 w-full sm:w-64 flex-shrink-0"
+                    className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-4 rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105"
                   >
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-3">

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { IconType } from 'react-icons';
-import { HiOutlineViewGrid, HiOutlineUsers, HiOutlineUser, HiChevronUp, HiBell, HiOutlineFolderOpen, HiOutlineSparkles, HiOutlineCog, HiOutlineChartBar, HiOutlineDocumentText } from 'react-icons/hi';
+import { HiOutlineViewGrid, HiOutlineUsers, HiOutlineUser, HiChevronUp, HiBell, HiOutlineFolderOpen, HiOutlineSparkles, HiOutlineCog, HiOutlineChartBar, HiOutlineDocumentText, HiOutlineCube } from 'react-icons/hi';
 import { SiLatex } from 'react-icons/si';
 import { useState, useEffect } from 'react';
 import { ROLES } from '../utils/permissions';
@@ -111,6 +111,13 @@ const SideMenu: React.FC<SideMenuProps> = ({
        icon: <HiOutlineSparkles className={`${isCollapsed ? 'w-6 h-6' : 'w-5 h-5'}`} />,
        onClick: () => onNavigate('ai-process-generator'),
        view: 'ai-process-generator',
+       requiredRole: ROLES.USER // Everyone can access
+     },
+     {
+       label: 'Decision Engine',
+       icon: <HiOutlineCube className={`${isCollapsed ? 'w-6 h-6' : 'w-5 h-5'}`} />,
+       onClick: () => onNavigate('decision-engine'),
+       view: 'decision-engine',
        requiredRole: ROLES.USER // Everyone can access
      },
      {
@@ -226,6 +233,8 @@ const SideMenu: React.FC<SideMenuProps> = ({
           .filter(item => hasAccess(item.requiredRole) && (item.shouldShow !== false))
           .map((item, index) => {
             const isAIGenerator = item.view === 'ai-process-generator';
+            const isDecisionEngine = item.view === 'decision-engine';
+            const isSpecialItem = isAIGenerator || isDecisionEngine;
             
             return (
             <button
@@ -237,20 +246,28 @@ const SideMenu: React.FC<SideMenuProps> = ({
                       ? currentView === item.view
                         ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-lg shadow-blue-500/20'
                         : 'bg-gradient-to-r from-blue-500/70 via-purple-500/70 to-pink-500/70 text-white hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md shadow-blue-400/10 hover:shadow-lg hover:shadow-blue-500/25'
-                      : currentView === item.view
-                        ? 'bg-blue-600 text-white shadow-lg'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                      : isDecisionEngine
+                        ? currentView === item.view
+                          ? 'bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white shadow-lg shadow-green-500/20'
+                          : 'bg-gradient-to-r from-green-500/70 via-emerald-500/70 to-teal-500/70 text-white hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 shadow-md shadow-green-400/10 hover:shadow-lg hover:shadow-green-500/25'
+                        : currentView === item.view
+                          ? 'bg-blue-600 text-white shadow-lg'
+                          : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                   }`}
               >
-                {isAIGenerator && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 via-purple-400/5 to-pink-400/5 rounded-lg"></div>
+                {isSpecialItem && (
+                  <div className={`absolute inset-0 rounded-lg ${
+                    isAIGenerator 
+                      ? 'bg-gradient-to-r from-blue-400/5 via-purple-400/5 to-pink-400/5'
+                      : 'bg-gradient-to-r from-green-400/5 via-emerald-400/5 to-teal-400/5'
+                  }`}></div>
                 )}
-                <div className={isAIGenerator ? 'relative z-10' : ''}>
+                <div className={isSpecialItem ? 'relative z-10' : ''}>
               {item.icon}
                 </div>
               {!isCollapsed && (
-                  <div className={isAIGenerator ? 'relative z-10' : ''}>
-                    <span className={`text-sm ${isAIGenerator ? 'font-bold' : 'font-medium'}`}>
+                  <div className={isSpecialItem ? 'relative z-10' : ''}>
+                    <span className={`text-sm ${isSpecialItem ? 'font-bold' : 'font-medium'}`}>
                       {item.label}
                     </span>
                   {item.badge}
