@@ -1,0 +1,16 @@
+employee_name,department,years_of_service,projects_completed,attendance_percentage,kpi_score,certifications,rating
+John Doe,Engineering,5,24,98,85,3,Pending
+Jane Smith,Marketing,3,18,95,78,2,Pending
+Mike Johnson,Sales,7,32,92,88,4,Pending
+Sarah Williams,HR,4,15,99,82,2,Pending
+Tom Brown,Engineering,2,8,87,65,1,Pending
+Emily Davis,Finance,6,28,96,90,5,Pending
+Chris Wilson,IT,8,36,94,92,6,Pending
+Amanda Lee,Marketing,3,14,91,75,2,Pending
+David Garcia,Sales,5,26,88,80,3,Pending
+Lisa Martinez,Engineering,4,20,97,86,3,Pending
+Robert Taylor,IT,9,42,95,94,7,Pending
+Jennifer Anderson,HR,2,10,85,68,1,Pending
+Michael Thomas,Finance,7,30,98,91,5,Pending
+Patricia White,Marketing,4,16,93,77,2,Pending
+James Harris,Sales,6,29,90,83,4,Pending

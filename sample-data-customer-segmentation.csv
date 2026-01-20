@@ -1,0 +1,16 @@
+customer_name,age,total_purchases,loyalty_points,purchase_frequency,average_order_value,member_since_years,tier
+Alice Cooper,35,15000,3200,Weekly,250,5,Pending
+Bob Johnson,28,5000,800,Monthly,150,2,Pending
+Carol White,45,28000,6500,Daily,400,8,Pending
+David Lee,32,8500,1500,Bi-Weekly,200,3,Pending
+Emma Davis,29,3200,400,Monthly,120,1,Pending
+Frank Miller,55,42000,9800,Daily,600,12,Pending
+Grace Wilson,38,12000,2800,Weekly,280,4,Pending
+Henry Brown,26,2100,250,Quarterly,100,1,Pending
+Isabella Garcia,42,19000,4200,Weekly,350,6,Pending
+Jack Martinez,31,6800,1200,Monthly,180,2,Pending
+Kate Anderson,48,35000,8100,Daily,500,10,Pending
+Liam Thompson,33,9200,1800,Bi-Weekly,220,3,Pending
+Mia Rodriguez,27,4500,650,Monthly,140,2,Pending
+Noah Taylor,52,38000,8900,Daily,550,11,Pending
+Olivia Harris,36,13500,3100,Weekly,290,5,Pending
