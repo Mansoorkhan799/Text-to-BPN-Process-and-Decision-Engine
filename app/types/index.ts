@@ -104,4 +104,64 @@ export interface Comment {
   order: number;
 }
 
-export type CommentType = 'text' | 'voice' | 'video'; 
+export type CommentType = 'text' | 'voice' | 'video';
+
+// Decision Engine Types
+export interface RuleCondition {
+  id: string;
+  field: string;
+  operator: '==' | '!=' | '>' | '<' | '>=' | '<=' | 'contains' | 'startsWith' | 'endsWith' | 'in' | 'notIn';
+  value: any;
+}
+
+export interface RuleAction {
+  id: string;
+  type: 'assign' | 'notify' | 'approve' | 'reject' | 'custom';
+  value: string;
+  targetField?: string;
+  description?: string;
+}
+
+export interface RuleItem {
+  id: string;
+  name: string;
+  conditions: RuleCondition[];
+  logicOperator: 'AND' | 'OR';
+  actions: RuleAction[];
+  priority: number;
+}
+
+export interface DecisionRule {
+  _id?: string;
+  name: string;
+  description?: string;
+  rules: RuleItem[];
+  status: 'active' | 'inactive';
+  createdBy: string;
+  associatedBpmnProcesses?: string[];
+  version: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface DataGridCell {
+  row: number;
+  column: string;
+  value: any;
+  type?: 'string' | 'number' | 'boolean' | 'date' | 'formula';
+  formula?: string;
+}
+
+export interface ExecutionResult {
+  data: any;
+  matchedRules: {
+    ruleId: string;
+    ruleName: string;
+    conditions: RuleCondition[];
+    actions: RuleAction[];
+    priority: number;
+  }[];
+  finalAction?: string;
+  success: boolean;
+  message?: string;
+} 
